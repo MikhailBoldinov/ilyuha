@@ -1,5 +1,6 @@
 package main;
 
+import core.utils.Logger;
 import core.utils.ProgressIndicator;
 import core.xls.Config;
 import core.xls.ConfigItem;
@@ -10,7 +11,7 @@ import main.service.ProductProcessor;
 import main.xls.ProductReader;
 import main.xls.ProductWriter;
 
-import java.io.IOException;
+import java.util.Date;
 
 import static core.xls.Column.A;
 import static core.xls.Column.B;
@@ -41,7 +42,9 @@ public class ProductGenerator {
     public static final String NEW_LINE = "\r\n";
 
     private static final int CODES_COUNT_TO_WARN = 1000;
+    private static final String DEFAULT_OUT_FILE_NAME = "out.xls";
 
+    private static final Logger LOGGER = Logger.getInstance();
     private static final Config CONFIG = new Config();
 
     static {
@@ -60,36 +63,45 @@ public class ProductGenerator {
 
     public static void main(String[] args) {
         try {
+            LOGGER.start();
+
+            LOGGER.newLine();
+            if (args.length == 0) {
+                LOGGER.error("Please specify input file name as first program argument.");
+                System.exit(1);
+            }
             String inFileName = args[0];
-            String outFileName = args[1];
-
-            System.out.println();
-            System.out.println(String.format("Чтение входящего файла '%s' . . .", inFileName));
-
+            String outFileName = args.length < 2 ? "out.xls" : args[1];
+            LOGGER.info("Reading input file '%s'...", inFileName);
             ProductReader productReader = new ProductReader(inFileName, CONFIG);
             Product product = productReader.read();
-            System.out.println("OK");
+            LOGGER.info("Success!");
 
-            int codesCount = getCodesCount(product);
-            if (codesCount > CODES_COUNT_TO_WARN) {
-                System.out.println(String.format("Количество возможных кодов - %d. Обработка может занять длительное время.", codesCount));
-            }
-
-            System.out.println("Обработка данных . . .");
+            LOGGER.newLine();
+            LOGGER.info("Data processing...");
             ProductProcessor productProcessor = new ProductProcessor(product);
             ProductResult productResult = productProcessor.process();
-            System.out.println("OK");
+            LOGGER.info("Success!");
 
-            System.out.println(String.format("Сохранение результата в '%s' . . .", outFileName));
-            ProgressIndicator progress = new ProgressIndicator();
-            Thread progressThread = new Thread(progress);
-            progressThread.start();
+            LOGGER.newLine();
+            LOGGER.info("Saving results into '%s'...", outFileName);
+            int codesCount = getCodesCount(product);
+            if (codesCount > CODES_COUNT_TO_WARN) {
+                LOGGER.warn("Generated codes number is %,d. Data processing might be time consuming.", codesCount);
+            }
+            LOGGER.startProgress();
             ProductWriter productWriter = new ProductWriter(outFileName);
             productWriter.write(productResult);
-            progress.hide();
-            System.out.println("OK");
-        } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.endProgress();
+            LOGGER.info("Success!");
+
+            LOGGER.newLine();
+            LOGGER.totalTime();
+            LOGGER.finishTime();
+
+            LOGGER.newLine();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
         }
     }
 

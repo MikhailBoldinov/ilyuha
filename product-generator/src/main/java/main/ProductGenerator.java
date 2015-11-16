@@ -1,7 +1,6 @@
 package main;
 
 import core.utils.Logger;
-import core.utils.ProgressIndicator;
 import core.xls.Config;
 import core.xls.ConfigItem;
 import main.beans.Group;
@@ -10,8 +9,6 @@ import main.beans.ProductResult;
 import main.service.ProductProcessor;
 import main.xls.ProductReader;
 import main.xls.ProductWriter;
-
-import java.util.Date;
 
 import static core.xls.Column.A;
 import static core.xls.Column.B;

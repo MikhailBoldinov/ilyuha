@@ -35,7 +35,7 @@ public final class Logger {
 
     public void totalTime() {
         long endTime = System.currentTimeMillis();
-        double totalTime = ((double)(endTime - startTime)) / 1000;
+        double totalTime = ((double) (endTime - startTime)) / 1000;
         info("Total time: %.3f s", totalTime);
     }
 

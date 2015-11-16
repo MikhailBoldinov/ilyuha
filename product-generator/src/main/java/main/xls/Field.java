@@ -5,7 +5,7 @@ import core.xls.IField;
 /**
  * @author Mikhail Boldinov
  */
-public enum Field implements IField{
+public enum Field implements IField {
     DESCRIPTION,
     PRODUCER,
     SERIAL_NUMBER,

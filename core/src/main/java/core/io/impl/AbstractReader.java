@@ -1,5 +1,6 @@
 package core.io.impl;
 
+import core.xls.AbstractConfigBuilder;
 import core.xls.Config;
 import core.xls.IField;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -29,11 +30,13 @@ public abstract class AbstractReader {
 
     private HSSFWorkbook wb;
 
-    protected AbstractReader(String fileName, Config config) throws IOException {
+    protected AbstractReader(String fileName) throws IOException {
         this.fileName = fileName;
-        this.config = config;
+        this.config = getConfigBuilder().getConfig();
         initialize();
     }
+
+    protected abstract AbstractConfigBuilder getConfigBuilder();
 
     private void initialize() throws IOException {
         File file = new File(fileName);

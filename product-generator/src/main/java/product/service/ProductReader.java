@@ -1,33 +1,33 @@
-package main.xls;
+package product.service;
 
 import core.io.IReader;
 import core.io.impl.AbstractReader;
-import core.xls.Config;
-import main.beans.Group;
-import main.beans.Product;
+import core.xls.AbstractConfigBuilder;
+import product.beans.Group;
+import product.beans.Product;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import java.io.IOException;
 
-import static main.xls.Field.CODE;
-import static main.xls.Field.CODE_DESCRIPTION;
-import static main.xls.Field.DESCRIPTION;
-import static main.xls.Field.FIRST_GROUP_NUM;
-import static main.xls.Field.GROUP;
-import static main.xls.Field.IMAGE_EXTENSION;
-import static main.xls.Field.NUM;
-import static main.xls.Field.PRODUCER;
-import static main.xls.Field.SEPARATOR;
-import static main.xls.Field.SERIAL_NUMBER;
-import static main.xls.Field.SHORT_DESCRIPTION;
+import static product.beans.Field.CODE;
+import static product.beans.Field.CODE_DESCRIPTION;
+import static product.beans.Field.DESCRIPTION;
+import static product.beans.Field.FIRST_GROUP_NUM;
+import static product.beans.Field.GROUP;
+import static product.beans.Field.IMAGE_EXTENSION;
+import static product.beans.Field.NUM;
+import static product.beans.Field.PRODUCER;
+import static product.beans.Field.SEPARATOR;
+import static product.beans.Field.SERIAL_NUMBER;
+import static product.beans.Field.SHORT_DESCRIPTION;
 
 /**
  * @author Mikhail Boldinov
  */
 public class ProductReader extends AbstractReader implements IReader<Product> {
 
-    public ProductReader(String fileName, Config config) throws IOException {
-        super(fileName, config);
+    public ProductReader(String fileName) throws IOException {
+        super(fileName);
     }
 
     @Override
@@ -57,5 +57,10 @@ public class ProductReader extends AbstractReader implements IReader<Product> {
             product.addGroup(group);
         }
         return product;
+    }
+
+    @Override
+    protected AbstractConfigBuilder getConfigBuilder() {
+        return new ProductConfigBuilder();
     }
 }

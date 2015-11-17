@@ -1,12 +1,12 @@
-package main.beans;
+package product.beans;
 
 import core.utils.Utils;
 
 import java.util.List;
 
-import static main.ProductGenerator.DASH;
-import static main.ProductGenerator.DOT;
-import static main.ProductGenerator.SLASH;
+import static product.ProductGenerator.DASH;
+import static product.ProductGenerator.DOT;
+import static product.ProductGenerator.SLASH;
 
 /**
  * @author Mikhail Boldinov

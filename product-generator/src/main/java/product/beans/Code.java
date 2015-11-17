@@ -1,4 +1,4 @@
-package main.beans;
+package product.beans;
 
 /**
  * @author Mikhail Boldinov

@@ -1,4 +1,4 @@
-package main.xls;
+package product.beans;
 
 import core.xls.IField;
 

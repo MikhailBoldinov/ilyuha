@@ -1,9 +1,9 @@
-package main.xls;
+package product.service;
 
 import core.io.IWriter;
 import core.io.impl.AbstractWriter;
-import main.beans.Code;
-import main.beans.ProductResult;
+import product.beans.Code;
+import product.beans.ProductResult;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;

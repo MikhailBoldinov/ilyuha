@@ -1,17 +1,17 @@
-package main.service;
+package product.service;
 
 import core.utils.Utils;
-import main.beans.Code;
-import main.beans.Group;
-import main.beans.Product;
-import main.beans.ProductResult;
+import product.beans.Code;
+import product.beans.Group;
+import product.beans.Product;
+import product.beans.ProductResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static main.ProductGenerator.DASH;
-import static main.ProductGenerator.NEW_LINE;
-import static main.ProductGenerator.SPACE;
+import static product.ProductGenerator.DASH;
+import static product.ProductGenerator.NEW_LINE;
+import static product.ProductGenerator.SPACE;
 
 /**
  * @author Mikhail Boldinov

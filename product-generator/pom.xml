@@ -27,9 +27,13 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>main.ProductGenerator</mainClass>
+                            <mainClass>product.ProductGenerator</mainClass>
                         </manifest>
                     </archive>
+                    <excludes>
+                        <exclude>*.xls</exclude>
+                        <exclude>*.bat</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
 

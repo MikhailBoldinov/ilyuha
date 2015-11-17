@@ -56,7 +56,7 @@ public class ProgressIndicator implements Runnable {
         outStream.print("\r");
     }
 
-    private void sleep() {
+    private static void sleep() {
         try {
             Thread.sleep(DELAY);
         } catch (InterruptedException ignore) {

@@ -15,7 +15,6 @@
         <dependency>
             <groupId>ilyuha</groupId>
             <artifactId>core</artifactId>
-            <version>1.0</version>
         </dependency>
     </dependencies>
 
@@ -35,27 +34,6 @@
                         <exclude>*.bat</exclude>
                     </excludes>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/production</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/resources</directory>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>
@@ -95,7 +73,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 

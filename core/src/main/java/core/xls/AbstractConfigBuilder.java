@@ -15,6 +15,4 @@ public abstract class AbstractConfigBuilder {
     public Config getConfig() {
         return build();
     }
-
-    protected abstract AbstractConfigBuilder getInstance();
 }

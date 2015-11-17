@@ -4,9 +4,9 @@ import core.utils.Logger;
 import product.beans.Group;
 import product.beans.Product;
 import product.beans.ProductResult;
-import product.service.ProductProcessor;
-import product.service.ProductReader;
-import product.service.ProductWriter;
+import product.services.ProductProcessor;
+import product.services.ProductReader;
+import product.services.ProductWriter;
 
 /**
  * @author Mikhail Boldinov

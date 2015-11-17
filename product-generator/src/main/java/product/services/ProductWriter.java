@@ -1,4 +1,4 @@
-package product.service;
+package product.services;
 
 import core.io.IWriter;
 import core.io.impl.AbstractWriter;

@@ -1,4 +1,4 @@
-package product.service;
+package product.services;
 
 import core.xls.AbstractConfigBuilder;
 import core.xls.Config;
@@ -39,10 +39,5 @@ public class ProductConfigBuilder extends AbstractConfigBuilder {
         add(CODE, 0, D);
         add(CODE_DESCRIPTION, 0, E);
         return config;
-    }
-
-    @Override
-    protected AbstractConfigBuilder getInstance() {
-        return new ProductConfigBuilder();
     }
 }

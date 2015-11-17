@@ -1,4 +1,4 @@
-package product.service;
+package product.services;
 
 import core.utils.Utils;
 import product.beans.Code;

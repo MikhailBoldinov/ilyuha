@@ -12,6 +12,8 @@ public final class Logger {
     private static final String WARNING_PREFIX = " [WARNING] ";
     private static final String ERROR_PREFIX = " [ERROR] ";
     private static final String SEPARATOR_LINE = " [INFO] ------------------------------------------------------------------------";
+    private static final String TOTAL_TIME = "Total time: %.3f s";
+    private static final String FINISHED_AT = "Finished at: %s";
     private static final String EMPTY = "";
 
     private static Logger instance = new Logger();
@@ -36,11 +38,11 @@ public final class Logger {
     public void totalTime() {
         long endTime = System.currentTimeMillis();
         double totalTime = ((double) (endTime - startTime)) / 1000;
-        info("Total time: %.3f s", totalTime);
+        info(TOTAL_TIME, totalTime);
     }
 
     public void finishTime() {
-        info("Finished at: %s", new Date());
+        info(FINISHED_AT, new Date());
     }
 
     public void startProgress() {
@@ -95,7 +97,7 @@ public final class Logger {
 
     private void err(String level, String msg, Throwable e, Object... args) {
         errStream.println(level + String.format(msg, args));
-        e.printStackTrace();
+        e.printStackTrace(Logger.errStream);
     }
 
     public void setOutStream(PrintStream outStream) {

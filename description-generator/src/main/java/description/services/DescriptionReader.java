@@ -1,8 +1,8 @@
 package description.services;
 
-import core.io.IReader;
-import core.io.impl.AbstractReader;
-import core.xls.AbstractConfigBuilder;
+import core.service.IReader;
+import core.service.impl.AbstractConfigBuilder;
+import core.service.impl.AbstractReader;
 import description.beans.Description;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 

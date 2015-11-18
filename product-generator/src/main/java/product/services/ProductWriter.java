@@ -1,7 +1,7 @@
 package product.services;
 
-import core.io.IWriter;
-import core.io.impl.AbstractWriter;
+import core.service.IWriter;
+import core.service.impl.AbstractWriter;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;

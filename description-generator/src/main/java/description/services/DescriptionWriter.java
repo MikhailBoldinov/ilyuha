@@ -1,7 +1,7 @@
 package description.services;
 
-import core.io.IWriter;
-import core.io.impl.AbstractWriter;
+import core.service.IWriter;
+import core.service.impl.AbstractWriter;
 import description.beans.DescriptionResult;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;

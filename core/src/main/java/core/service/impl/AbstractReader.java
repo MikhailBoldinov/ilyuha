@@ -1,6 +1,5 @@
-package core.io.impl;
+package core.service.impl;
 
-import core.xls.AbstractConfigBuilder;
 import core.xls.Config;
 import core.xls.IField;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -19,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import static core.utils.Utils.LF;
+
 /**
  * @author Mikhail Boldinov
  */
@@ -29,6 +30,7 @@ public abstract class AbstractReader {
     protected String fileName;
 
     private HSSFWorkbook wb;
+    private String datePattern = "dd/MM/yy";
 
     protected AbstractReader(String fileName) throws IOException {
         this.fileName = fileName;
@@ -82,7 +84,7 @@ public abstract class AbstractReader {
     protected Integer getNumericValue(HSSFSheet sheet, int rowNum, IField field) {
         HSSFCell cell = getCell(sheet, rowNum, field);
         if (cell != null) {
-            String value = FORMATTER.formatCellValue(cell).replaceAll("\n", "");
+            String value = FORMATTER.formatCellValue(cell).replaceAll(LF, "");
             return Integer.parseInt(value);
         }
         return null;
@@ -92,7 +94,7 @@ public abstract class AbstractReader {
         HSSFCell cell = getCell(sheet, rowNum, field);
         if (cell != null) {
             if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
                 try {
                     return simpleDateFormat.parse(FORMATTER.formatCellValue(cell));
                 } catch (ParseException e) {
@@ -114,6 +116,10 @@ public abstract class AbstractReader {
 
     protected int getNumberOfRows(HSSFSheet sheet) {
         return sheet.getPhysicalNumberOfRows();
+    }
+
+    public void setDatePattern(String datePattern) {
+        this.datePattern = datePattern;
     }
 
     private void debug(Object msg) {

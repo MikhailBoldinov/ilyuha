@@ -2,6 +2,8 @@ package core.utils;
 
 import java.io.PrintStream;
 
+import static core.utils.Utils.CR;
+
 /**
  * @author Mikhail Boldinov
  */
@@ -53,7 +55,7 @@ public class ProgressIndicator implements Runnable {
     }
 
     private void carriageReturn() {
-        outStream.print("\r");
+        outStream.print(CR);
     }
 
     private static void sleep() {

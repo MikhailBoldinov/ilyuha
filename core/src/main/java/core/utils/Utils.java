@@ -9,7 +9,9 @@ public final class Utils {
     public static final String DASH = "-";
     public static final String DOT = ".";
     public static final String SPACE = " ";
-    public static final String NEW_LINE = "\r\n";
+    public static final String CR_LF = "\r\n";
+    public static final String CR = "\r";
+    public static final String LF = "\n";
 
     private Utils() {
     }

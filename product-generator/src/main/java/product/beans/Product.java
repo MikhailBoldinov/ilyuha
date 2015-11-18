@@ -1,12 +1,14 @@
 package product.beans;
 
+import core.service.IProcessable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Mikhail Boldinov
  */
-public class Product {
+public class Product implements IProcessable {
     private String description;
     private String producer;
     private String serialNumber;

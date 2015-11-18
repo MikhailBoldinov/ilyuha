@@ -44,7 +44,7 @@ public class SynonymList {
         StringBuilder sb = new StringBuilder();
         for (String synonym : synonyms) {
             sb.append(synonym);
-            sb.append(";");
+            sb.append(SPLITTER);
         }
         return sb.toString();
     }

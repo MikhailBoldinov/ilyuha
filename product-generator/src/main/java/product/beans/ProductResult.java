@@ -1,5 +1,6 @@
 package product.beans;
 
+import core.service.IWriteable;
 import core.utils.Utils;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import static core.utils.Utils.SLASH;
 /**
  * @author Mikhail Boldinov
  */
-public class ProductResult {
+public class ProductResult implements IWriteable {
 
     private String producer;
     private String serialNumber;
@@ -78,5 +79,10 @@ public class ProductResult {
 
     public void setProductCodes(List<Code> productCodes) {
         this.productCodes = productCodes;
+    }
+
+    @Override
+    public int getCount() {
+        return productCodes.size();
     }
 }

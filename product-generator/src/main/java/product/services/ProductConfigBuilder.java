@@ -1,6 +1,6 @@
 package product.services;
 
-import core.xls.AbstractConfigBuilder;
+import core.service.impl.AbstractConfigBuilder;
 import core.xls.Config;
 
 import static core.xls.Column.A;

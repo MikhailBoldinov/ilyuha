@@ -1,9 +1,8 @@
 package description.services;
 
-import core.xls.AbstractConfigBuilder;
+import core.service.impl.AbstractConfigBuilder;
 import core.xls.Config;
 
-import static core.xls.Column.A;
 import static core.xls.Column.B;
 import static description.beans.Field.CODE;
 import static description.beans.Field.DESCRIPTION_TEXT;

@@ -1,11 +1,11 @@
 package product.services;
 
-import core.io.IReader;
-import core.io.impl.AbstractReader;
-import core.xls.AbstractConfigBuilder;
+import core.service.IReader;
+import core.service.impl.AbstractConfigBuilder;
+import core.service.impl.AbstractReader;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import product.beans.Group;
 import product.beans.Product;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import java.io.IOException;
 

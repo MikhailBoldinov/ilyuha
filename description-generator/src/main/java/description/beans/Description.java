@@ -1,12 +1,14 @@
 package description.beans;
 
+import core.service.IProcessable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Mikhail Boldinov
  */
-public class Description {
+public class Description implements IProcessable {
     private String descriptionText;
     private List<String> codes = new ArrayList<>();
 

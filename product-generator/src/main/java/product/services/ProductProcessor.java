@@ -1,7 +1,6 @@
 package product.services;
 
 import core.service.IProcessor;
-import core.service.impl.AbstractProcessor;
 import core.utils.Utils;
 import product.beans.Code;
 import product.beans.Group;
@@ -11,28 +10,24 @@ import product.beans.ProductResult;
 import java.util.ArrayList;
 import java.util.List;
 
+import static core.utils.Utils.CR_LF;
 import static core.utils.Utils.DASH;
-import static core.utils.Utils.NEW_LINE;
 import static core.utils.Utils.SPACE;
 
 /**
  * @author Mikhail Boldinov
  */
-public class ProductProcessor extends AbstractProcessor<Product> implements IProcessor<ProductResult> {
-
-    public ProductProcessor(Product bean) {
-        super(bean);
-    }
+public class ProductProcessor implements IProcessor<Product, ProductResult> {
 
     @Override
-    public ProductResult process() {
+    public ProductResult process(Product product) {
         ProductResult productResult = new ProductResult();
-        productResult.setProducer(getProcessData().getProducer());
-        productResult.setSerialNumber(getProcessData().getSerialNumber());
-        productResult.setShortDescription(getProcessData().getShortDescription());
-        productResult.setDescription(getProcessData().getDescription());
-        productResult.setImageExtension(getProcessData().getImageExtension());
-        productResult.setProductCodes(getProductCodes(getProcessData().getGroups()));
+        productResult.setProducer(product.getProducer());
+        productResult.setSerialNumber(product.getSerialNumber());
+        productResult.setShortDescription(product.getShortDescription());
+        productResult.setDescription(product.getDescription());
+        productResult.setImageExtension(product.getImageExtension());
+        productResult.setProductCodes(getProductCodes(product.getGroups()));
         return productResult;
     }
 
@@ -61,7 +56,7 @@ public class ProductProcessor extends AbstractProcessor<Product> implements IPro
             if (i < groups.size() - 1) {
                 codeKey += group.getSeparator();
             }
-            decoding += Utils.buildString(NEW_LINE, group.getName(), SPACE, DASH, SPACE, code.getValue());
+            decoding += Utils.buildString(CR_LF, group.getName(), SPACE, DASH, SPACE, code.getValue());
         }
         return new Code(codeKey, decoding);
     }

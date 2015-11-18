@@ -9,21 +9,19 @@ import static core.utils.Utils.CR;
  */
 public class ProgressIndicator implements Runnable {
 
-    private static final String PROGRESS_SYMBOL = "-";
-    private static final int PROGRESS_LENGTH = 72;
+    private static final String PROGRESS_SYMBOL = ".";
+    private static final int MAX_LENGTH = 80;
     private static final long DELAY = 100L;
 
     private boolean run = true;
     private PrintStream outStream;
-    private int maxLength;
-    private String blankLine;
     private String prefix;
+    private String emptyLine;
 
     public ProgressIndicator(PrintStream outStream, String prefix) {
         this.outStream = outStream;
         this.prefix = prefix;
-        this.maxLength = getMaxLength(prefix);
-        this.blankLine = getBlankLine();
+        this.emptyLine = getEmptyLine(prefix);
     }
 
     @Override
@@ -33,11 +31,9 @@ public class ProgressIndicator implements Runnable {
 
     public void show() {
         int i = reset();
-        print(prefix);
         while (run) {
-            if (i >= maxLength) {
+            if (i >= MAX_LENGTH) {
                 i = reset();
-                print(prefix);
             }
             print(PROGRESS_SYMBOL);
             sleep();
@@ -46,7 +42,9 @@ public class ProgressIndicator implements Runnable {
     }
 
     public void hide() {
-        reset();
+        carriageReturn();
+        print(getEmptyLine(""));
+        carriageReturn();
         run = false;
     }
 
@@ -65,22 +63,23 @@ public class ProgressIndicator implements Runnable {
         }
     }
 
-    private int getMaxLength(String prefix) {
-        return prefix.length() + PROGRESS_LENGTH;
+    private int reset() {
+        erase();
+        return prefix.length();
     }
 
-    private String getBlankLine() {
+    private void erase() {
+        carriageReturn();
+        print(emptyLine);
+        carriageReturn();
+        print(prefix);
+    }
+
+    private String getEmptyLine(String prefix) {
         StringBuilder sb = new StringBuilder(prefix);
-        for (int i = prefix.length(); i <= maxLength; i++) {
+        for (int i = prefix.length(); i <= MAX_LENGTH; i++) {
             sb.append(" ");
         }
         return sb.toString();
-    }
-
-    private int reset() {
-        carriageReturn();
-        print(blankLine);
-        carriageReturn();
-        return prefix.length();
     }
 }

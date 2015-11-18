@@ -43,36 +43,13 @@ public abstract class AbstractGenerator<R extends IReader, P extends IProcessor,
         }
     }
 
-    @SuppressWarnings("unchecked")
     public void generate() {
         try {
-            LOGGER.start();
-
-            LOGGER.newLine();
-            LOGGER.info("Reading input file '%s'...", inputFileName);
-            IProcessable processable = reader.read();
-            LOGGER.info("Success!");
-
-            LOGGER.newLine();
-            LOGGER.info("Data processing...");
-            IWriteable writeable = processor.process(processable);
-            LOGGER.info("Success!");
-
-            LOGGER.newLine();
-            LOGGER.info("Saving results into '%s'...", outputFileName);
-            if (writeable.getCount() > COUNT_TO_WARN) {
-                LOGGER.warn("Generated codes number is %,d. Data processing might be time consuming.", writeable.getCount());
-            }
-            LOGGER.startProgress();
-            writer.write(writeable);
-            LOGGER.endProgress();
-            LOGGER.info("Success!");
-
-            LOGGER.newLine();
-            LOGGER.totalTime();
-            LOGGER.finishTime();
-
-            LOGGER.newLine();
+            start();
+            IProcessable processable = read();
+            IWriteable writeable = process(processable);
+            write(writeable);
+            finish();
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -83,4 +60,45 @@ public abstract class AbstractGenerator<R extends IReader, P extends IProcessor,
     public abstract P getProcessor();
 
     public abstract W getWriter();
+
+    private void start() {
+        LOGGER.start();
+    }
+
+    private IProcessable read() throws IOException {
+        LOGGER.newLine();
+        LOGGER.info("Reading input file '%s'...", inputFileName);
+        IProcessable processable = reader.read();
+        LOGGER.info("Success!");
+        return processable;
+    }
+
+    @SuppressWarnings("unchecked")
+    private IWriteable process(IProcessable processable) {
+        LOGGER.newLine();
+        LOGGER.info("Data processing...");
+        IWriteable writeable = processor.process(processable);
+        LOGGER.info("Success!");
+        return writeable;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void write(IWriteable writeable) throws IOException {
+        LOGGER.newLine();
+        LOGGER.info("Saving results into '%s'...", outputFileName);
+        if (writeable.getCount() > COUNT_TO_WARN) {
+            LOGGER.warn("Generated codes number is %,d. Data processing might be time consuming.", writeable.getCount());
+        }
+        LOGGER.startProgress();
+        writer.write(writeable);
+        LOGGER.endProgress();
+        LOGGER.info("Success!");
+    }
+
+    private void finish() {
+        LOGGER.newLine();
+        LOGGER.totalTime();
+        LOGGER.finishTime();
+        LOGGER.newLine();
+    }
 }

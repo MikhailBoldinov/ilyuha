@@ -46,7 +46,7 @@ public final class Logger {
     }
 
     public void startProgress() {
-        progress = new ProgressIndicator(outStream, INFO_PREFIX);
+        progress = new ProgressIndicator(outStream, INFO_PREFIX + "Please wait");
         Thread progressThread = new Thread(progress);
         progressThread.start();
     }

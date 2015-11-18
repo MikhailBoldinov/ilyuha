@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Workbook;
  */
 public abstract class AbstractWriter {
     protected static final int MAX_ROWS_NUMBER = 65535;
+    private static final short DEFAULT_ROW_HEIGHT = 300;
 
     protected String fileName;
     protected Workbook wb;
@@ -24,35 +25,53 @@ public abstract class AbstractWriter {
 
     protected Sheet createNewSheet(Workbook wb) {
         Sheet sheet = wb.createSheet();
-        sheet.createFreezePane(0, 1);
         writeHeader(sheet);
         return sheet;
     }
 
     protected abstract void writeHeader(Sheet sheet);
 
-    protected void addCell(Sheet sheet, int rowNumber, Column column, CellStyle style) {
-        addCell(sheet, rowNumber, column, null, style);
+    protected Row createHeader(Sheet sheet, Short rowHeight) {
+        return createRow(sheet, 0, rowHeight);
     }
 
-    protected void addCell(Sheet sheet, int rowNumber, Column column, String value, CellStyle style) {
-        Row row = sheet.getRow(rowNumber);
+    protected Row createHeader(Sheet sheet) {
+        return createRow(sheet, 0);
+    }
+
+    protected Row createRow(Sheet sheet, int rowId) {
+        return createRow(sheet, rowId, null);
+    }
+
+    protected Row createRow(Sheet sheet, int rowId, Short rowHeight) {
+        Row row = sheet.createRow(rowId);
+        row.setHeight(rowHeight != null ? rowHeight : DEFAULT_ROW_HEIGHT);
+        return row;
+    }
+
+    protected void addCell(Row row, Column column, String value) {
+        addCell(row, column, value, null);
+    }
+
+    protected void addCell(Row row, Column column, CellStyle style) {
+        addCell(row, column, null, style);
+    }
+
+    protected void addCell(Row row, Column column, String value, CellStyle style) {
         Cell cell = row.createCell(column.getNum());
         if (value != null) {
             cell.setCellValue(value);
         }
-        cell.setCellStyle(style);
-    }
-
-    protected void setColumnWidth(Sheet sheet, Column column, boolean autoSize) {
-        setColumnWidth(sheet, column, autoSize, 0);
-    }
-
-    protected void setColumnWidth(Sheet sheet, Column column, boolean autoSize, int width) {
-        if (autoSize) {
-            sheet.autoSizeColumn(column.getNum());
-        } else {
-            sheet.setColumnWidth(column.getNum(), width);
+        if (style != null) {
+            cell.setCellStyle(style);
         }
+    }
+
+    protected void autoSizeColumnWidth(Sheet sheet, Column column) {
+        sheet.autoSizeColumn(column.getNum());
+    }
+
+    protected void setColumnWidth(Sheet sheet, Column column, int width) {
+        sheet.setColumnWidth(column.getNum(), width);
     }
 }

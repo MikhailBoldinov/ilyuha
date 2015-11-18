@@ -2,14 +2,14 @@ package product.services;
 
 import core.io.IWriter;
 import core.io.impl.AbstractWriter;
-import product.beans.Code;
-import product.beans.ProductResult;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import product.beans.Code;
+import product.beans.ProductResult;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,7 +42,6 @@ public class ProductWriter extends AbstractWriter implements IWriter<ProductResu
     private static final int DESCRIPTION_COLUMN_WIDTH = 12000;
     private static final short HEADER_HEIGHT = 500;
     private static final short ROW_HEIGHT = 1200;
-    private static final int HEADER_ROW_NUMBER = 0;
     private static final String FONT_NAME = "Calibri";
     private static final short FONT_SIZE = 11;
 
@@ -59,9 +58,9 @@ public class ProductWriter extends AbstractWriter implements IWriter<ProductResu
         CellStyle oddRowStyleNoBorder = getOddRowStyle(false);
         CellStyle style, styleNoBorder;
 
-        int currentRow = HEADER_ROW_NUMBER + 1;
+        int currentRow = 1;
         for (Code productCode : productResult.getProductCodes()) {
-            Row row = sheet.createRow(currentRow);
+            Row row = createRow(sheet, currentRow, ROW_HEIGHT);
             if (currentRow % 2 == 0) {
                 style = evenRowStyle;
                 styleNoBorder = evenRowStyleNoBorder;
@@ -69,31 +68,30 @@ public class ProductWriter extends AbstractWriter implements IWriter<ProductResu
                 style = oddRowStyle;
                 styleNoBorder = oddRowStyleNoBorder;
             }
-            row.setHeight(ROW_HEIGHT);
-            addCell(sheet, currentRow, A, productResult.getProducer_serialNumber(), style);
-            addCell(sheet, currentRow, B, productResult.getModel(productCode.getKey()), style);
-            addCell(sheet, currentRow, C, styleNoBorder);
-            addCell(sheet, currentRow, D, productResult.getProducer_model(productCode.getKey()), style);
-            addCell(sheet, currentRow, E, styleNoBorder);
-            addCell(sheet, currentRow, F, styleNoBorder);
-            addCell(sheet, currentRow, G, productResult.getProducer(), style);
-            addCell(sheet, currentRow, H, styleNoBorder);
-            addCell(sheet, currentRow, I, styleNoBorder);
-            addCell(sheet, currentRow, J, styleNoBorder);
-            addCell(sheet, currentRow, K, styleNoBorder);
-            addCell(sheet, currentRow, L, styleNoBorder);
-            addCell(sheet, currentRow, M, styleNoBorder);
-            addCell(sheet, currentRow, N, styleNoBorder);
-            addCell(sheet, currentRow, O, productResult.getShortDescription(), style);
-            addCell(sheet, currentRow, P, productResult.getDescription(productCode.getKey(), productCode.getValue()), style);
-            addCell(sheet, currentRow, Q, productResult.getImage(), style);
+            addCell(row, A, productResult.getProducer_serialNumber(), style);
+            addCell(row, B, productResult.getModel(productCode.getKey()), style);
+            addCell(row, C, styleNoBorder);
+            addCell(row, D, productResult.getProducer_model(productCode.getKey()), style);
+            addCell(row, E, styleNoBorder);
+            addCell(row, F, styleNoBorder);
+            addCell(row, G, productResult.getProducer(), style);
+            addCell(row, H, styleNoBorder);
+            addCell(row, I, styleNoBorder);
+            addCell(row, J, styleNoBorder);
+            addCell(row, K, styleNoBorder);
+            addCell(row, L, styleNoBorder);
+            addCell(row, M, styleNoBorder);
+            addCell(row, N, styleNoBorder);
+            addCell(row, O, productResult.getShortDescription(), style);
+            addCell(row, P, productResult.getDescription(productCode.getKey(), productCode.getValue()), style);
+            addCell(row, Q, productResult.getImage(), style);
             currentRow++;
             if (currentRow > MAX_ROWS_NUMBER) {
                 sheet = createNewSheet(wb);
-                currentRow = HEADER_ROW_NUMBER + 1;
+                currentRow = 1;
             }
         }
-        setColumnsWidth();
+        adjustColumnsWidth();
 
         FileOutputStream fileOut = new FileOutputStream(fileName);
         wb.write(fileOut);
@@ -101,49 +99,50 @@ public class ProductWriter extends AbstractWriter implements IWriter<ProductResu
     }
 
     protected void writeHeader(Sheet sheet) {
-        Row header = sheet.createRow(HEADER_ROW_NUMBER);
-        header.setHeight(HEADER_HEIGHT);
+        Row header = createHeader(sheet, HEADER_HEIGHT);
 
         CellStyle style = getHeaderStyle();
-        addCell(sheet, HEADER_ROW_NUMBER, A, "Производитель/Серия", style);
-        addCell(sheet, HEADER_ROW_NUMBER, B, "Модель", style);
-        addCell(sheet, HEADER_ROW_NUMBER, C, style);
-        addCell(sheet, HEADER_ROW_NUMBER, D, "Производитель/модель", style);
-        addCell(sheet, HEADER_ROW_NUMBER, E, style);
-        addCell(sheet, HEADER_ROW_NUMBER, F, style);
-        addCell(sheet, HEADER_ROW_NUMBER, G, "Производитель", style);
-        addCell(sheet, HEADER_ROW_NUMBER, H, style);
-        addCell(sheet, HEADER_ROW_NUMBER, I, style);
-        addCell(sheet, HEADER_ROW_NUMBER, J, style);
-        addCell(sheet, HEADER_ROW_NUMBER, K, style);
-        addCell(sheet, HEADER_ROW_NUMBER, L, style);
-        addCell(sheet, HEADER_ROW_NUMBER, M, style);
-        addCell(sheet, HEADER_ROW_NUMBER, N, style);
-        addCell(sheet, HEADER_ROW_NUMBER, O, "Краткое описание", style);
-        addCell(sheet, HEADER_ROW_NUMBER, P, "Полное описание", style);
-        addCell(sheet, HEADER_ROW_NUMBER, Q, "Картинка", style);
+        addCell(header, A, "Производитель/Серия", style);
+        addCell(header, B, "Модель", style);
+        addCell(header, C, style);
+        addCell(header, D, "Производитель/модель", style);
+        addCell(header, E, style);
+        addCell(header, F, style);
+        addCell(header, G, "Производитель", style);
+        addCell(header, H, style);
+        addCell(header, I, style);
+        addCell(header, J, style);
+        addCell(header, K, style);
+        addCell(header, L, style);
+        addCell(header, M, style);
+        addCell(header, N, style);
+        addCell(header, O, "Краткое описание", style);
+        addCell(header, P, "Полное описание", style);
+        addCell(header, Q, "Картинка", style);
+
+        sheet.createFreezePane(0, 1);
     }
 
-    private void setColumnsWidth() {
+    private void adjustColumnsWidth() {
         for (int i = 0; i < wb.getNumberOfSheets(); i++) {
             Sheet sheet = wb.getSheetAt(i);
-            setColumnWidth(sheet, A, true);
-            setColumnWidth(sheet, B, true);
-            setColumnWidth(sheet, C, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, D, true);
-            setColumnWidth(sheet, E, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, F, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, G, true);
-            setColumnWidth(sheet, H, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, I, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, J, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, K, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, L, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, M, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, N, false, EMPTY_COLUMN_WIDTH);
-            setColumnWidth(sheet, O, false, SHORT_DESCRIPTION_COLUMN_WIDTH);
-            setColumnWidth(sheet, P, false, DESCRIPTION_COLUMN_WIDTH);
-            setColumnWidth(sheet, Q, true);
+            autoSizeColumnWidth(sheet, A);
+            autoSizeColumnWidth(sheet, B);
+            setColumnWidth(sheet, C, EMPTY_COLUMN_WIDTH);
+            autoSizeColumnWidth(sheet, D);
+            setColumnWidth(sheet, E, EMPTY_COLUMN_WIDTH);
+            setColumnWidth(sheet, F, EMPTY_COLUMN_WIDTH);
+            autoSizeColumnWidth(sheet, G);
+            setColumnWidth(sheet, H, EMPTY_COLUMN_WIDTH);
+            setColumnWidth(sheet, I, EMPTY_COLUMN_WIDTH);
+            setColumnWidth(sheet, J, EMPTY_COLUMN_WIDTH);
+            setColumnWidth(sheet, K, EMPTY_COLUMN_WIDTH);
+            setColumnWidth(sheet, L, EMPTY_COLUMN_WIDTH);
+            setColumnWidth(sheet, M, EMPTY_COLUMN_WIDTH);
+            setColumnWidth(sheet, N, EMPTY_COLUMN_WIDTH);
+            setColumnWidth(sheet, O, SHORT_DESCRIPTION_COLUMN_WIDTH);
+            setColumnWidth(sheet, P, DESCRIPTION_COLUMN_WIDTH);
+            autoSizeColumnWidth(sheet, Q);
         }
     }
 

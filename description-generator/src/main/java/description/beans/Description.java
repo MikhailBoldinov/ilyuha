@@ -7,15 +7,15 @@ import java.util.List;
  * @author Mikhail Boldinov
  */
 public class Description {
-    private String text;
+    private String descriptionText;
     private List<String> codes = new ArrayList<>();
 
-    public String getText() {
-        return text;
+    public String getDescriptionText() {
+        return descriptionText;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDescriptionText(String descriptionText) {
+        this.descriptionText = descriptionText;
     }
 
     public List<String> getCodes() {

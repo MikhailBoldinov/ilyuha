@@ -4,9 +4,9 @@ import core.utils.Utils;
 
 import java.util.List;
 
-import static product.ProductGenerator.DASH;
-import static product.ProductGenerator.DOT;
-import static product.ProductGenerator.SLASH;
+import static core.utils.Utils.DASH;
+import static core.utils.Utils.DOT;
+import static core.utils.Utils.SLASH;
 
 /**
  * @author Mikhail Boldinov

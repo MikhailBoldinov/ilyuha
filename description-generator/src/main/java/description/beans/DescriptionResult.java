@@ -1,19 +1,19 @@
 package description.beans;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Mikhail Boldinov
  */
 public class DescriptionResult {
-    private List<String> resultList = new ArrayList<>();
+    private Map<String, String> resultMap = new HashMap<>();
 
-    public List<String> getResultList() {
-        return resultList;
+    public Map<String, String> getResultMap() {
+        return resultMap;
     }
 
-    public void addResult(String result) {
-        resultList.add(result);
+    public void putResult(String code, String result) {
+        resultMap.put(code, result);
     }
 }

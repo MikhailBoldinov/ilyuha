@@ -1,5 +1,7 @@
 package product.services;
 
+import core.service.IProcessor;
+import core.service.impl.AbstractProcessor;
 import core.utils.Utils;
 import product.beans.Code;
 import product.beans.Group;
@@ -9,29 +11,28 @@ import product.beans.ProductResult;
 import java.util.ArrayList;
 import java.util.List;
 
-import static product.ProductGenerator.DASH;
-import static product.ProductGenerator.NEW_LINE;
-import static product.ProductGenerator.SPACE;
+import static core.utils.Utils.DASH;
+import static core.utils.Utils.NEW_LINE;
+import static core.utils.Utils.SPACE;
 
 /**
  * @author Mikhail Boldinov
  */
-public class ProductProcessor {
+public class ProductProcessor extends AbstractProcessor<Product> implements IProcessor<ProductResult> {
 
-    private Product product;
-
-    public ProductProcessor(Product product) {
-        this.product = product;
+    public ProductProcessor(Product bean) {
+        super(bean);
     }
 
+    @Override
     public ProductResult process() {
         ProductResult productResult = new ProductResult();
-        productResult.setProducer(product.getProducer());
-        productResult.setSerialNumber(product.getSerialNumber());
-        productResult.setShortDescription(product.getShortDescription());
-        productResult.setDescription(product.getDescription());
-        productResult.setImageExtension(product.getImageExtension());
-        productResult.setProductCodes(getProductCodes(product.getGroups()));
+        productResult.setProducer(getProcessData().getProducer());
+        productResult.setSerialNumber(getProcessData().getSerialNumber());
+        productResult.setShortDescription(getProcessData().getShortDescription());
+        productResult.setDescription(getProcessData().getDescription());
+        productResult.setImageExtension(getProcessData().getImageExtension());
+        productResult.setProductCodes(getProductCodes(getProcessData().getGroups()));
         return productResult;
     }
 

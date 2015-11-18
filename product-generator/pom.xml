@@ -68,7 +68,7 @@
                                     <overWrite>true</overWrite>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/production</outputDirectory>
+                            <outputDirectory>${basedir}/target/${artifactId}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

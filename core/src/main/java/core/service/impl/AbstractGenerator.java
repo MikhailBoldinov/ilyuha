@@ -43,6 +43,7 @@ public abstract class AbstractGenerator<R extends IReader, P extends IProcessor,
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void generate() {
         try {
             LOGGER.start();

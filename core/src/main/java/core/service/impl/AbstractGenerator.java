@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public abstract class AbstractGenerator<R extends IReader, P extends IProcessor, W extends IWriter> {
 
-    private static final int CODES_COUNT_TO_WARN = 1000;
+    private static final int COUNT_TO_WARN = 1000;
     private static final String DEFAULT_OUT_FILE_NAME = "out.xls";
 
     private static final Logger LOGGER = Logger.getInstance();
@@ -60,7 +60,7 @@ public abstract class AbstractGenerator<R extends IReader, P extends IProcessor,
 
             LOGGER.newLine();
             LOGGER.info("Saving results into '%s'...", outputFileName);
-            if (writeable.getCount() > CODES_COUNT_TO_WARN) {
+            if (writeable.getCount() > COUNT_TO_WARN) {
                 LOGGER.warn("Generated codes number is %,d. Data processing might be time consuming.", writeable.getCount());
             }
             LOGGER.startProgress();

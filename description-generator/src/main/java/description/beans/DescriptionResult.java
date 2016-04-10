@@ -3,13 +3,14 @@ package description.beans;
 import core.service.IWriteable;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * @author Mikhail Boldinov
  */
 public class DescriptionResult implements IWriteable {
-    private Map<String, String> resultMap = new HashMap<>();
+    private Map<String, String> resultMap = new LinkedHashMap<>();
 
     public Map<String, String> getResultMap() {
         return resultMap;
